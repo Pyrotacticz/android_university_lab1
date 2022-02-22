@@ -1,5 +1,6 @@
 package com.codepath.bestsellerlistapp
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,7 +28,8 @@ class BestSellerBooksFragment : Fragment(), OnListFragmentInteractionListener {
         val progressBar = view.findViewById<View>(R.id.progress) as ContentLoadingProgressBar
         val recyclerView = view.findViewById<View>(R.id.list) as RecyclerView
         val context = view.context
-        recyclerView.layoutManager = GridLayoutManager(context, 2)
+        val portrait: Int = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4
+        recyclerView.layoutManager = GridLayoutManager(context, portrait)
         updateAdapter(progressBar, recyclerView)
         return view
     }
