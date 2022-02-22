@@ -1,10 +1,15 @@
 package com.codepath.bestsellerlistapp
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -44,6 +49,11 @@ class BestSellerBooksRecyclerViewAdapter(
                 mListener?.onItemClick(book)
             }
         }
+        holder.mBookBuyButton.setOnClickListener { v ->
+            val uri: Uri = Uri.parse(books[position].amazonUrl)
+            val intent: Intent = Intent(Intent.ACTION_VIEW, uri)
+            holder.mContext.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -56,7 +66,9 @@ class BestSellerBooksRecyclerViewAdapter(
         val mBookTitle: TextView = mView.findViewById<View>(id.book_title) as TextView
         val mBookAuthor: TextView = mView.findViewById<View>(id.book_author) as TextView
         val mBookDescription: TextView = mView.findViewById<View>(id.book_description) as TextView
+        val mBookBuyButton: Button = mView.findViewById<View>(id.buy_button) as Button
         var mItem: BestSellerBook? = null
+        val mContext: Context = mView.context
 
         override fun toString(): String {
             return mBookTitle.toString() + " '" + mBookAuthor.text + "'"
